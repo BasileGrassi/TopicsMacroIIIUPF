@@ -1,0 +1,8 @@
+
+%% -------------------------------QUESTION 4a)-----------------------------
+%% Parameters of the benchmark case
+
+
+function D=D(p)
+    D=1/p;
+end
