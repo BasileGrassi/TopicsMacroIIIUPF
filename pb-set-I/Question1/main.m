@@ -80,8 +80,11 @@ ylabel('CCDF');
 
 N=length(log_v_sort); %number of firms in the sample
 
+
 %Selecte the 350 largest firms
+disp('-----------------------------------------------')
 Ntop=350;
+disp(['for the ', num2str(Ntop), ' largest firms'])
 
 log_rank_350=log_rank(N-Ntop+1:N);
 log_v_sort_350 = log_v_sort(N-Ntop+1:N);
@@ -99,5 +102,74 @@ disp(zeta)
 disp('with an asymptotique standard error (Gabaix 2007)')
 disp(std)
 
+%Selecte the 100 largest firms
+disp('-----------------------------------------------')
+Ntop=100;
+disp(['for the ', num2str(Ntop), ' largest firms'])
 
+log_rank_350=log_rank(N-Ntop+1:N);
+log_v_sort_350 = log_v_sort(N-Ntop+1:N);
 
+X=[log_v_sort_350, ones(size(log_v_sort_350))];
+Y=log_rank_350;
+
+beta=lscov(X,Y);
+
+zeta=beta(1);
+std=zeta*(Ntop/2)^(-1/2);
+
+disp('The estimated slope is')
+disp(zeta)
+disp('with an asymptotique standard error (Gabaix 2007)')
+disp(std)
+
+%Selecte the 50 largest firms
+disp('-----------------------------------------------')
+Ntop=50;
+disp(['for the ', num2str(Ntop), ' largest firms'])
+
+log_rank_350=log_rank(N-Ntop+1:N);
+log_v_sort_350 = log_v_sort(N-Ntop+1:N);
+
+X=[log_v_sort_350, ones(size(log_v_sort_350))];
+Y=log_rank_350;
+
+beta=lscov(X,Y);
+
+zeta=beta(1);
+std=zeta*(Ntop/2)^(-1/2);
+
+disp('The estimated slope is')
+disp(zeta)
+disp('with an asymptotique standard error (Gabaix 2007)')
+disp(std)
+
+%% Question 1 d) Empirical evidence of the non existence of second moment
+% figure(4);
+% 
+% T=100; 
+% Ndraw=100;
+% Ntop=350;
+% value_sort_350=value_sort(N-Ntop+1:N);
+% 
+% N=length(value_sort);
+% 
+% emp_std = zeros(T,Ndraw); 
+% 
+% 
+% for k=2:T;
+%     for n=1:Ndraw;
+%       isample=randi(N,k,1);
+%       sample=value_sort(isample);
+%       w = ksdensity(value_norm,sample);
+%       m=mean(w.*sample);
+%       emp_std(k,n)= sqrt( 1/(k-1) * sum( w.*(sample -m).^2 ) );
+%     end;
+% end;
+% 
+% 
+% plot(mean(emp_std,2),'LineWidth',2);
+% xlabel('sample size');
+% ylabel('\sigma_k');
+% title('Adjusted empirical standard error');
+% 
